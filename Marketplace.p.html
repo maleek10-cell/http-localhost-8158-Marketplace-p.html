@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oba Gadget - Phone Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); /* Galaxy background */
+            background-size: cover;
+            background-attachment: fixed;
+            background-color: #000; /* Dark fallback for galaxy theme */
+            position: relative; /* For overlay positioning */
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            background-image: url('https://images.unsplash.com/photo-1591333964974-23e69926cc79?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80'); /* Phone overlay */
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: relative; /* Ensure above overlay */
+            z-index: 2;
+        }
+        nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1em;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        nav a {
+            color: white;
+            margin: 0 1em;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .search-bar {
+            text-align: center;
+            padding: 1em;
+            position: relative;
+            z-index: 2;
+        }
+        .search-bar input {
+            padding: 0.5em;
+            width: 300px;
+            font-size: 1em;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .search-bar button {
+            padding: 0.5em 1em;
+            font-size: 1em;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .search-bar button:hover {
+            background-color: rgba(50, 50, 50, 0.7);
+        }
+        .phone-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 2em;
+            position: relative;
+            z-index: 2;
+        }
+        .phone-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 1em;
+            padding: 1em;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        .phone-card img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .phone-card h3 {
+            margin: 0.5em 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .phone-card p {
+            color: #555;
+            margin: 0.5em 0;
+        }
+        .phone-card a {
+            color: #333;
+            text-decoration: none;
+        }
+        .phone-card a:hover {
+            text-decoration: underline;
+        }
+        .phone-card button {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .phone-card button:hover {
+            background-color: rgba(50, 50, 50, 0.7);
+        }
+        .sell-form {
+            max-width: 600px;
+            margin: 2em auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2em;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        .sell-form h2 {
+            text-align: center;
+        }
+        .sell-form label {
+            display: block;
+            margin: 0.5em 0 0.2em;
+        }
+        .sell-form input, .sell-form select, .sell-form textarea {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .sell-form button {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        .sell-form button:hover {
+            background-color: rgba(50, 50, 50, 0.7);
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            z-index: 2;
+        }
+        .contact-links a {
+            color: white;
+            text-decoration: none;
+        }
+        .contact-links a:hover {
+            text-decoration: underline;
+        }
+        .whatsapp-icon {
+            color: #25D366;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header><h1>Oba Gadget</h1><p>Buy and Sell Phones with Ease</p></header>
+    <nav><a href="#home" onclick="showPage('home')">Home</a><a href="#sell" onclick="showPage('sell')">Sell</a><a href="#about" onclick="showPage('about')">About</a><a href="#contact" onclick="showPage('contact')">Contact</a></nav>
+    <div id="home" class="page active">
+        <div class="search-bar"><input type="text" id="searchInput" placeholder="Search for phones..."><button onclick="searchPhones()">Search</button></div>
+        <div class="phone-list" id="phoneList">
+            <div class="phone-card"><img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pink-select-2021?wid=470&hei=556&fmt=png-alpha&.v=1629842709000" alt="iPhone 13"><h3>iPhone 13</h3><p><a href="tel:+2348084674713">+234 808 467 4713</a></p><p>Brand new, 128GB, Black</p><button onclick="viewDetails('iPhone 13')">View Details</button></div>
+            <div class="phone-card"><img src="https://images.samsung.com/is/image/samsung/p6pim/levant/2108/gallery/levant-galaxy-s21-5g-g996-sm-g996bzsdeue-481081947?$650_519_PNG$" alt="Samsung Galaxy S21"><h3>Samsung Galaxy S21</h3><p><a href="tel:+2348084674713">+234 808 467 4713</a></p><p>Used, 256GB, Silver</p><button onclick="viewDetails('Samsung Galaxy S21')">View Details</button></div>
+            <div class="phone-card"><img src="https://store.google.com/static/images/pixel6pro_black.png" alt="Google Pixel 6"><h3>Google Pixel 6</h3><p><a href="tel:+2348084674713">+234 808 467 4713</a></p><p>Refurbished, 128GB, Green</p><button onclick="viewDetails('Google Pixel 6')">View Details</button></div>
+            <div class="phone-card"><img src="https://www.giztop.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/x/i/xiaomi_redmi_note_11_4g_global_version_1.jpg" alt="Xiaomi Redmi Note 11"><h3>Xiaomi Redmi Note 11</h3><p><a href="tel:+2348084674713">+234 808 467 4713</a></p><p>Like new, 128GB, Blue</p><button onclick="viewDetails('Xiaomi Redmi Note 11')">View Details</button></div>
+        </div>
+    </div>
+    <div id="sell" class="page">
+        <div class="sell-form">
+            <h2>List Your Phone</h2>
+            <form id="sellPhoneForm" onsubmit="submitPhone(event)">
+                <label for="phoneName">Phone Model</label><input type="text" id="phoneName" name="phoneName" required>
+                <label for="phoneCondition">Condition</label><select id="phoneCondition" name="phoneCondition" required><option value="">Select condition</option><option value="Brand New">Brand New</option><option value="Like New">Like New</option><option value="Used">Used</option><option value="Refurbished">Refurbished</option></select>
+                <label for="phoneDescription">Description</label><textarea id="phoneDescription" name="phoneDescription" rows="4" required></textarea>
+                <label for="phoneImage">Upload Image</label><input type="file" id="phoneImage" name="phoneImage" accept="image/*" required>
+                <label for="phoneContact">Your Contact Number</label><input type="text" id="phoneContact" name="phoneContact" placeholder="+234 808 123 4567" required>
+                <button type="submit">List Phone</button>
+            </form>
+        </div>
+    </div>
+    <div id="about" class="page"><h2 style="text-align: center;">About Oba Gadget</h2><p style="text-align: center;">Oba Gadget is your trusted platform for buying and selling phones in Nigeria and beyond.</p></div>
+    <div id="contact" class="page"><h2 style="text-align: center;">Contact Us</h2><p style="text-align: center;">Email: <a href="mailto:merlinjnr787@gmail.com">merlinjnr787@gmail.com</a></p><p style="text-align: center;">Phone: <a href="tel:+2348084674713">+234 808 467 4713</a></p><p style="text-align: center;">WhatsApp: <a href="https://wa.me/+2348084674713"><i class="fab fa-whatsapp whatsapp-icon"></i>Chat with us on WhatsApp</a></p></div>
+    <footer><p>© 2025 Oba Gadget. All rights reserved.</p><p class="contact-links">Contact: <a href="mailto:merlinjnr787@gmail.com">merlinjnr787@gmail.com</a> | Phone: <a href="tel:+2348084674713">+234 808 467 4713</a> | WhatsApp: <a href="https://wa.me/+2348084674713"><i class="fab fa-whatsapp whatsapp-icon"></i>Chat with us</a></p></footer>
+    <script>
+        function showPage(pageId) { const pages = document.getElementsByClassName('page'); for (let page of pages) page.classList.remove('active'); document.getElementById(pageId).classList.add('active'); }
+        function searchPhones() { const searchTerm = document.getElementById('searchInput').value.toLowerCase(); const phoneCards = document.getElementsByClassName('phone-card'); for (let card of phoneCards) { const title = card.getElementsByTagName('h3')[0].textContent.toLowerCase(); card.style.display = title.includes(searchTerm) ? 'block' : 'none'; } }
+        function viewDetails(phoneName) { const phoneCards = document.getElementsByClassName('phone-card'); let contactNumber = '+234 808 467 4713'; for (let card of phoneCards) if (card.getElementsByTagName('h3')[0].textContent === phoneName) { contactNumber = card.getElementsByTagName('a')[0].textContent; break; } alert(`Viewing details for ${phoneName}. Contact: ${contactNumber}`); }
+        function submitPhone(event) { event.preventDefault(); const phoneName = document.getElementById('phoneName').value; const phoneCondition = document.getElementById('phoneCondition').value; const phoneDescription = document.getElementById('phoneDescription').value; const phoneImage = document.getElementById('phoneImage').files[0]; const phoneContact = document.getElementById('phoneContact').value;
+            const contactRegex = /^\+\d{1,4}\s?\d{9,12}$/; // e.g., +234 808 123 4567
+            if (!contactRegex.test(phoneContact)) { alert('Invalid contact number. Use format: +[country code] [9-12 digits], e.g., +234 808 123 4567'); return; }
+            if (!phoneName || !phoneCondition || !phoneDescription || !phoneImage || !phoneContact) { alert('Please fill out all required fields, including an image and contact number.'); return; }
+            const formData = new FormData(); formData.append('phoneName', phoneName); formData.append('phoneCondition', phoneCondition); formData.append('phoneDescription', phoneDescription); formData.append('phoneContact', phoneContact); formData.append('phoneImage', phoneImage);
+            fetch('http://localhost:3000/api/listings', { method: 'POST', body: formData }).then(response => response.json()).then(data => { if (data.success) { alert(`Phone Listed on Oba Gadget!\nModel: ${phoneName}\nCondition: ${phoneCondition}\nDescription: ${phoneDescription}\nContact: ${phoneContact}`); const phoneList = document.getElementById('phoneList'); const newCard = document.createElement('div'); newCard.className = 'phone-card'; newCard.innerHTML = `<img src="${data.imageUrl}" alt="${phoneName}"><h3>${phoneName}</h3><p><a href="tel:${phoneContact}">${phoneContact}</a></p><p>${phoneCondition}, ${phoneDescription}</p><button onclick="viewDetails('${phoneName}')">View Details</button>`; phoneList.appendChild(newCard); document.getElementById('sellPhoneForm').reset(); showPage('home'); } else { alert('Error listing phone: ' + data.message); } }).catch(error => alert('Error: ' + error.message));
+        }
+    </script>
+</body>
+</html>
